@@ -1,22 +1,24 @@
-package inheritance;
-// Fig. 9.4: CommissionEmployee.java
-// CommissionEmployee class represents an employee paid a
-// percentage of gross sales.
-public class CommissionEmployee {
+package classes_and_objects_deeper_look;
+// Fig. 9.6: BasePlusCommissionEmployee.java
+// BasePlusCommissionEmployee class represents an employee who receives
+// a base salary in addition to commission.
+
+public class BasePlusCommissionEmployee {
 
     private final String firstName;
     private final String lastName;
     private final String socialSecurityNumber;
     private double grossSales; // gross weekly sales
     private double commissionRate; // commission percentage
+    private double baseSalary; // base salary per week
 
-    // five-argument constructor
-    public CommissionEmployee( String firstName, String lastName, 
-        String socialSecurityNumber, double grossSales, 
-        double commissionRate ) {
+    // six-argument constructor
+    public BasePlusCommissionEmployee( String firstName, String lastName, 
+    String socialSecurityNumber, double grossSales, 
+    double commissionRate, double baseSalary ) {
 
         // implicit call to Object's default constructor occurs here
-        
+
         // if grossSales is invalid throw exception
         if ( grossSales < 0.0 )
             throw new IllegalArgumentException(
@@ -27,11 +29,17 @@ public class CommissionEmployee {
             throw new IllegalArgumentException(
                 "Commission rate must be > 0.0 and < 1.0" );
                 
+        // if baseSalary is invalid throw exception
+        if ( baseSalary < 0.0 )
+            throw new IllegalArgumentException( 
+                "Base salary must be >= 0.0" );
+                
         this.firstName = firstName;
         this.lastName = lastName;
         this.socialSecurityNumber = socialSecurityNumber;
         this.grossSales = grossSales;
         this.commissionRate = commissionRate;
+        this.baseSalary = baseSalary;
 
     } // end constructor
 
@@ -78,10 +86,10 @@ public class CommissionEmployee {
     public void setCommissionRate( double commissionRate ) {
 
         if ( commissionRate <= 0.0 || commissionRate >= 1.0 )
-            throw new IllegalArgumentException(
+            throw new IllegalArgumentException( 
                 "Commission rate must be > 0.0 and < 1.0" );
 
-        this.commissionRate = commissionRate;
+        this.commissionRate = commissionRate;        
 
     }
 
@@ -92,23 +100,42 @@ public class CommissionEmployee {
 
     }
 
-    // calculate earnings
-    public double earning() {
+    // set base salary
+    public void setBaseSalary( double baseSalary ) {
 
-        return commissionRate * grossSales;
+        if ( baseSalary < 0.0 )
+            throw new IllegalArgumentException( 
+                "Base salary must be >= 0.0" );
+
+        this.baseSalary = baseSalary;
 
     }
 
-    // return String representation of CommissionEmployee object
-    @Override // indicates that this method overrides a superclass method
+    // return base salary
+    public double getBaseSalary() {
+
+        return baseSalary;
+
+    }
+
+    // calculate earnings
+    public double earnings() {
+
+        return baseSalary + ( commissionRate * grossSales );
+
+    }
+
+    // return String representation of BasePlusCommissionEmployee
+    @Override
     public String toString() {
 
-        return String.format ("%s: %s %s%n%s: %s%n%s: %.2f%n%s: %.2f", 
-            "commission employee", firstName, lastName, 
+        return String.format(
+            "%s: %s %s%n%s: %s%n%s: %.2f%n%s: %.2f%n%s: %.2f",
+            "base-salaried commission employee", firstName, lastName,
             "social security number", socialSecurityNumber,
-            "gross sales", grossSales,
-            "commission rate", commissionRate );
+            "gross sales", grossSales, "commission rate", commissionRate,
+            "base salary", baseSalary );
 
     }
     
-} // end class CommissionEmployee
+} // end class BasePlusCommissionEmployee
