@@ -1,4 +1,4 @@
-package classes_and_objects_deeper_look;
+package inheritance;
 // Fig. 9.6: BasePlusCommissionEmployee.java
 // BasePlusCommissionEmployee class represents an employee who receives
 // a base salary in addition to commission.
